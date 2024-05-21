@@ -1,0 +1,82 @@
+@startuml
+
+class Usuario{
+- tipoDeUsuario: String
+- nombreDeUsuario: String
+- id: int
+- contraseña: String
+- id_administrador: int
++ Usuario(tipoDeUsuario: String,nombreDeUsuario: String,id: int,contraseña: String,id_administrador: int )
++ getTipoDeUsuario(): String
++ getNombreDeUsuario(): String
++ getId(): int
++ getContraseña(): String
++ getId_administrador(): int
+}
+class Manga{
+- nombre: String
+- stock: int
+- descripcion: String
+- precio: int
++ Manga(nombre: String, stock: int, descripcion: String, precio: int)
++ getNombre(): String
++ getStock(): int
++ getDescripcion(): String
++ getPrecio(): int
+}
+class Comentario{
+- cantidadComentarios: int
+- comentarios: String
+- mensaje: String
+- critica: int
++ Comentario(cantidadComentarios: int, comentarios: String, mensaje: String, critica: int)
++ getCantidadComentarios(): int
++ getComentarios(): String
++ getMensaje(): String
++ getCritica(): int
+}
+class Compra{
+- id_usuario: int
+- estado: String
+- fecha: String
+- cantidad: int
++ Compra(id_usuario: int, estado: String, fecha: String, cantidad: int)
++ getId_usuario(): int
++ getEstado(): String
++ getFecha(): String
++ getCantidad(): int
+}
+class CodigoManga{
+- isbn: int
++ CodigoManga(isbn: int)
++ getIsbn(): int
+}
+class SistemaImpl{
+
+}
+interface Sistema{
++ menu(): void
++ mensajeMenu1(): void
++ mensajeMenu2(): void
++ mensajeMenu3(): void
++ mensajeMenu4(): void
++ mensajeMenu5(): void
++ cargarArchivos(): void
++ agregarManga(titulo: String, isbn: int, stock: int, descripcion: String, precio: int): void
++ verUltimosMangas(): void
++ actualizarCompra(isbn: int): void
++ estadisticas(): void
++ salir1(): void
++ buscarManga(titulo: String): void
++ mangasComprados(): void
++ valorarMangas(isbn: int): void
++ verComentarios(isbn: int): void
++ compraManga(isbn: int): void
++ salir2(): void
+}
+
+
+
+
+
+@enduml
