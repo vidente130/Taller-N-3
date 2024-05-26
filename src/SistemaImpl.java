@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import edu.princeton.cs.stdlib.In;
 
 public class SistemaImpl implements Sistema{
 
@@ -88,18 +89,20 @@ public class SistemaImpl implements Sistema{
 
         String linea = in.readLine();
 
-        while (linea != null){
+        while (!linea.isEmpty()){
 
             System.out.println(linea);
             String[] campos = linea.split(",");
 
+            if (campos.length() ==4) {
+            }
             String usuarios = campos[0];
             String nombres = campos[1];
             int id = Integer.parseInt(campos[2]);
             String contrasenias = campos[3];
             int id_administrador = Integer.parseInt(campos[4]);
-            if (id_administrador != null){
-            }
+
+
 
 
             Usuario usuario = new Usuario(usuarios,nombres,id,contrasenias,id_administrador);
@@ -109,10 +112,87 @@ public class SistemaImpl implements Sistema{
 
 
 
+
+
     }
+
+    public void cargarMangas(){
+
+        In in2 = new In("mangas.csv");
+        int tamanio2 = 0;
+
+        String linea = in2.readLine();
+
+        while (!linea.isEmpty()){
+            System.out.println(linea);
+            String[] campos = linea.split(";");
+            int isbn = Integer.parseInt(campos[0]);
+            String nombre = campos[1];
+            int stock = Integer.parseInt(campos[2]);
+            String descripcion = campos[3];
+            int precio = Integer.parseInt(campos[4]);
+
+            Manga manga = new Manga(isbn,nombre,stock,descripcion,precio);
+            linea = in2.readLine();
+
+
+
+        }
+    }
+
+    public void cargarComentarios(){
+        In in3 = new In("comentarios.csv");
+        int tamanio3 = 0;
+
+        String linea = in3.readLine();
+
+        while (!linea.isEmpty()){
+
+            System.out.println(linea);
+            String[] campos = linea.split(";");
+        }
+
+    }
+    public void cargarCompras(){
+        In in4 = new In("compras.csv");
+
+        int tamanio3 = 0;
+        String linea = in4.readLine();
+        while (!linea.isEmpty()){
+            System.out.println(linea);
+            String[] campos = linea.split(",");
+            int idCompra = Integer.parseInt(campos[0]);
+            int idUsuario = Integer.parseInt(campos[1]);
+            String estado = campos[2];
+            String fecha = campos[3];
+            int cantidadCompra = Integer.parseInt(campos[4]);
+            Compra compra = new Compra(idCompra,idUsuario,estado,fecha,cantidadCompra);
+            linea = in4.readLine();
+
+        }
+
+    }
+
 
     @Override
     public void registrarManga(String titulo, int isbn, int stock, String descripcion, int precio) {
+
+        System.out.println("ingrese el titulo del manga ha agregar ");
+        String Titulo = opcion.nextLine();
+        System.out.println("ingrese el ISBN del manga ha agregar ");
+        int Isbn = opcion.nextInt();
+        System.out.println("ingrese el stock del manga ha agregar ");
+        int Stock = opcion.nextInt();
+        System.out.println("ingrese el descripcion del manga ha agregar ");
+        String Descripcion = opcion.nextLine();
+        System.out.println("ingrese el precio del manga ha agregar ");
+        int Precio = opcion.nextInt();
+
+        Manga manga = new Manga(Isbn,Titulo,Stock,Descripcion,Precio);
+        mangas.add(manga);
+
+
+
 
     }
 
@@ -133,16 +213,24 @@ public class SistemaImpl implements Sistema{
 
     @Override
     public void salir1() {
+        System.out.println("adiosito señor administrador ");
 
     }
 
     @Override
     public void buscarManga(String titulo) {
+        System.out.println("ingrese el titulo del manga ");
+        String nombre = opcion.nextLine();
+        if (nombre.equals()){
+
+        }
 
     }
 
     @Override
     public void mangasComprados() {
+
+
 
     }
 
@@ -154,15 +242,21 @@ public class SistemaImpl implements Sistema{
     @Override
     public void verComentarios(int isbn) {
 
+
+
+
     }
 
     @Override
     public void comprarManga(int isbn) {
+        cargarMangas();
 
     }
 
     @Override
     public void salir2() {
+        System.out.println("adios ");
+        return;
 
     }
 }
