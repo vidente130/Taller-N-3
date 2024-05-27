@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import edu.princeton.cs.stdlib.In;
+//import edu.princeton.cs.stdlib.In;
 
 public class SistemaImpl implements Sistema{
 
@@ -22,7 +22,6 @@ public class SistemaImpl implements Sistema{
 
     @Override
     public void menu() {
-
         cargarArchivos();
 
         mensajeMenu1();
@@ -30,7 +29,7 @@ public class SistemaImpl implements Sistema{
         while (true){
             switch(pregunta){
                 case "1":
-
+                    iniciarUsuario();
                     break;
                 case "2":
 
@@ -43,7 +42,6 @@ public class SistemaImpl implements Sistema{
             }
 
             mensajeMenu1();
-            pregunta = opcion.nextLine();
         }
 
 
@@ -51,12 +49,34 @@ public class SistemaImpl implements Sistema{
 
     public void iniciarUsuario(){
 
+        System.out.println("Escriba su nombre de usuario:");
+        String nombre = opcion.nextLine();
+        System.out.println("Escriba su contraseña:");
+        String contrasenia = opcion.nextLine();
+        iniciarUsuario(nombre, contrasenia);
+    }
+
+    public void iniciarUsuario(String nombre, String contrasenia) {
+        for(int i = 0; i < usuarios.size(); i++){
+            if (nombre.equals(usuarios.get(i).getNombreDeUsuario())){
+                if (contrasenia.equals(usuarios.get(i).getContrasenia())){
+                    mensajeMenu2();
+                    System.out.println("hi estoy enfermo");
+                }
+                else{
+                    System.out.println("La contraseña no es igual a la que usted tiene");
+                }
+            }
+            else{
+                System.out.println("No puso bien su nombre");
+            }
+        }
     }
 
     @Override
     public void mensajeMenu1() {
 
-        System.out.println("-----Bienvenido a FUente Manga-----");
+        System.out.println("-----Bienvenido a Fuente Manga-----");
         System.out.println("1.- Iniciar sesion como usuario");
         System.out.println("2.- Iniciar sesion como administrador");
         System.out.println("Elija una opcion");
@@ -64,6 +84,13 @@ public class SistemaImpl implements Sistema{
 
     @Override
     public void mensajeMenu2() {
+        System.out.println("------ Bienvenido a su cuenta -----");
+        System.out.println("1.- Buscar manga.");
+        System.out.println("2.- Ver mangas comprados.");
+        System.out.println("3.- Valorar manga.");
+        System.out.println("4.- Ver comentarios de mangas");
+        System.out.println("5.- Comprar manga");
+        System.out.println("Elija una opcion:");
 
     }
 
@@ -89,30 +116,27 @@ public class SistemaImpl implements Sistema{
 
         String linea = in.readLine();
 
-        while (!linea.isEmpty()){
-
-            System.out.println(linea);
+        while (linea != null){
             String[] campos = linea.split(",");
 
-            if (campos.length() ==4) {
+            if (linea.length() == 5) {
+                String usuarios = campos[0];
+                String nombres = campos[1];
+                int id = Integer.parseInt(campos[2]);
+                String contrasenias = campos[3];
+                int id_administrador = Integer.parseInt(campos[4]);
+                Usuario usuario = new Usuario(usuarios,nombres,id,contrasenias,id_administrador);
             }
-            String usuarios = campos[0];
-            String nombres = campos[1];
-            int id = Integer.parseInt(campos[2]);
-            String contrasenias = campos[3];
-            int id_administrador = Integer.parseInt(campos[4]);
-
-
-
-
-            Usuario usuario = new Usuario(usuarios,nombres,id,contrasenias,id_administrador);
+            else if(linea.length() == 4){
+                String usuarios = campos[0];
+                String nombres = campos[1];
+                int id = Integer.parseInt(campos[2]);
+                String contrasenias = campos[3];
+                Usuario usuario1 = new Usuario(usuarios,nombres,id,contrasenias);
+            }
             linea = in.readLine();
 
         }
-
-
-
-
 
     }
 
@@ -221,9 +245,6 @@ public class SistemaImpl implements Sistema{
     public void buscarManga(String titulo) {
         System.out.println("ingrese el titulo del manga ");
         String nombre = opcion.nextLine();
-        if (nombre.equals()){
-
-        }
 
     }
 

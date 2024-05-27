@@ -18,6 +18,12 @@ public class Usuario {
         this.contrasenia = contrasenia;
         this.administrador_id = administrador_id;
     }
+    public Usuario(String tipoDeUsuario,String nombreDeUsuario,int id, String contrasenia){
+        this.tipoDeUsuario = tipoDeUsuario;
+        this.nombreDeUsuario = nombreDeUsuario;
+        this.id = id;
+        this.contrasenia = contrasenia;
+    }
 
     public String getTipoDeUsuario(){
         return tipoDeUsuario;
