@@ -24,6 +24,7 @@ public class SistemaImpl implements Sistema{
     public void menu() {
         cargarArchivos();
 
+        System.out.println(usuarios.get(1).getNombreDeUsuario());
         mensajeMenu1();
         String pregunta = opcion.nextLine();
         while (true){
@@ -33,15 +34,15 @@ public class SistemaImpl implements Sistema{
                     break;
                 case "2":
 
+
                     break;
+                case "3" :
 
-                default:
                     return;
-
-
             }
 
             mensajeMenu1();
+            pregunta = opcion.nextLine();
         }
 
 
@@ -57,29 +58,21 @@ public class SistemaImpl implements Sistema{
     }
 
     public void iniciarUsuario(String nombre, String contrasenia) {
-        for(int i = 0; i < usuarios.size(); i++){
-            if (nombre.equals(usuarios.get(i).getNombreDeUsuario())){
-                if (contrasenia.equals(usuarios.get(i).getContrasenia())){
-                    mensajeMenu2();
-                    System.out.println("hi estoy enfermo");
-                }
-                else{
-                    System.out.println("La contraseña no es igual a la que usted tiene");
-                }
-            }
-            else{
-                System.out.println("No puso bien su nombre");
-            }
+        System.out.println("HI señores");
+        for (int i = 0; i < usuarios.size(); i++ ){
+            System.out.println("buenas tardes");
         }
+        System.out.println("HI");
     }
 
     @Override
     public void mensajeMenu1() {
 
         System.out.println("-----Bienvenido a Fuente Manga-----");
-        System.out.println("1.- Iniciar sesion como usuario");
-        System.out.println("2.- Iniciar sesion como administrador");
-        System.out.println("Elija una opcion");
+        System.out.println("1.- Iniciar sesion como usuario.");
+        System.out.println("2.- Iniciar sesion como administrador.");
+        System.out.println("3.- Salir.");
+        System.out.println("Elija una opcion:");
     }
 
     @Override
@@ -125,17 +118,16 @@ public class SistemaImpl implements Sistema{
                 int id = Integer.parseInt(campos[2]);
                 String contrasenias = campos[3];
                 int id_administrador = Integer.parseInt(campos[4]);
-                Usuario usuario = new Usuario(usuarios,nombres,id,contrasenias,id_administrador);
+                Usuario usuario1 = new Usuario(usuarios,nombres,id,contrasenias,id_administrador);
             }
             else if(linea.length() == 4){
                 String usuarios = campos[0];
                 String nombres = campos[1];
                 int id = Integer.parseInt(campos[2]);
                 String contrasenias = campos[3];
-                Usuario usuario1 = new Usuario(usuarios,nombres,id,contrasenias);
+                Usuario usuario2 = new Usuario(usuarios,nombres,id,contrasenias);
             }
             linea = in.readLine();
-
         }
 
     }
