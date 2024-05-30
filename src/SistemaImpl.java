@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-//import edu.princeton.cs.stdlib.In;
+import edu.princeton.cs.stdlib.In;
 
 public class SistemaImpl implements Sistema{
 
@@ -33,7 +33,7 @@ public class SistemaImpl implements Sistema{
                     iniciarUsuario();
                     break;
                 case "2":
-
+                    iniciarUsuario2();
 
                     break;
                 case "3" :
@@ -58,11 +58,57 @@ public class SistemaImpl implements Sistema{
     }
 
     public void iniciarUsuario(String nombre, String contrasenia) {
-        System.out.println("HI señores");
-        for (int i = 0; i < usuarios.size(); i++ ){
-            System.out.println("buenas tardes");
+        System.out.println("Buenos dias señor/señorita " + nombre);
+        mensajeMenu2();
+        String pregunta = opcion.nextLine();
+        switch (pregunta){
+            case "1":
+
+            case "2":
+
+            case "3":
+
+            case "4":
+
+            case "5":
+
+            case "6":
+                System.out.println("Saliendo del sistema");
+                return;
         }
-        System.out.println("HI");
+    }
+
+    public void iniciarUsuario2(){
+        System.out.println("Escriba su nombre de Id de Administrador:");
+        int admin = opcion.nextInt();
+        System.out.println("Escriba su nombre de Usuario:");
+        String usuario = opcion.nextLine();
+        System.out.println("Escriba su contrasenia:");
+        String contrasenia2 = opcion.nextLine();
+        iniciarUsuario2(admin,usuario, contrasenia2);
+
+    }
+
+    public void iniciarUsuario2(int administradorID, String nombre, String contrasenia) {
+        System.out.println("Buenos dias administrador " + nombre);
+        mensajeMenu2();
+        String pregunta2 = opcion.nextLine();
+        switch (pregunta2){
+            case "1":
+
+            case "2":
+
+            case "3":
+
+            case "4":
+
+            case "5":
+
+            case "6":
+                System.out.println("Saliendo del sistema");
+                return;
+        }
+
     }
 
     @Override
@@ -83,12 +129,14 @@ public class SistemaImpl implements Sistema{
         System.out.println("3.- Valorar manga.");
         System.out.println("4.- Ver comentarios de mangas");
         System.out.println("5.- Comprar manga");
+        System.out.println("6.- Salir");
         System.out.println("Elija una opcion:");
 
     }
 
     @Override
     public void mensajeMenu3() {
+
 
     }
 
@@ -237,6 +285,7 @@ public class SistemaImpl implements Sistema{
     public void buscarManga(String titulo) {
         System.out.println("ingrese el titulo del manga ");
         String nombre = opcion.nextLine();
+        
 
     }
 
