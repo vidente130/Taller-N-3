@@ -281,11 +281,15 @@ public class SistemaImpl implements Sistema{
 
     }
 
-    @Override
-    public void buscarManga(String titulo) {
+    public void buscarManga(){
         System.out.println("ingrese el titulo del manga ");
         String nombre = opcion.nextLine();
-        
+        buscarManga(nombre);
+    }
+
+    @Override
+    public void buscarManga(String titulo) {
+       
 
     }
 
@@ -296,6 +300,14 @@ public class SistemaImpl implements Sistema{
 
     }
 
+    public void valorarManga(){
+        System.out.println("Escriba el isbn del manga que desea valorar ");
+
+        int isbn = opcion.nextInt();
+
+        valorarManga(isbn);
+    }
+
     @Override
     public void valorarManga(int isbn) {
 
@@ -303,7 +315,7 @@ public class SistemaImpl implements Sistema{
 
     @Override
     public void verComentarios(int isbn) {
-
+        cargarComentarios();
 
 
 
