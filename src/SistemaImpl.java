@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class SistemaImpl implements Sistema{
 
-    private ArrayList<Usuario> usuarios;
+    private final ArrayList<Usuario> usuarios;
 
     private ArrayList<Manga> mangas;
 
@@ -23,7 +23,6 @@ public class SistemaImpl implements Sistema{
     @Override
     public void menu() {
         cargarArchivos();
-
         mensajeMenu1();
         String pregunta = opcion.nextLine();
         while (true){
@@ -33,7 +32,6 @@ public class SistemaImpl implements Sistema{
                     break;
                 case "2":
                     iniciarUsuario2();
-
                     break;
                 case "3" :
 
@@ -72,7 +70,7 @@ public class SistemaImpl implements Sistema{
             case "5":
 
             case "6":
-                System.out.println("Saliendo del sistema");
+                System.out.println("Saliendo de la cuenta");
                 return;
         }
     }
@@ -88,24 +86,27 @@ public class SistemaImpl implements Sistema{
 
     }
 
+
     public void iniciarUsuario2(int administradorID, String nombre, String contrasenia) {
-        System.out.println("Buenos dias administrador " + nombre);
-        mensajeMenu2();
-        String pregunta2 = opcion.nextLine();
-        switch (pregunta2){
-            case "1":
+        if (administradorID == usuarios.get(1).getAdministrador_id()){
+            System.out.println("Escribio su id de administrador bien");
+            if (nombre.equals("bxnjadev")){
+                System.out.println("Escribio su nombre de usuario bien");
+                if (contrasenia.equals("hola123")){
+                    System.out.println("Escribio su contraseña bien");
+                    mensajeMenu3();
 
-            case "2":
-
-            case "3":
-
-            case "4":
-
-            case "5":
-
-            case "6":
-                System.out.println("Saliendo del sistema");
-                return;
+                }
+                else{
+                    System.out.println("No escribio su contraseña bien");
+                }
+            }
+            else{
+                System.out.println("No escribio su nombre de administrador bien");
+            }
+        }
+        else{
+            System.out.println("No es su identificador");
         }
 
     }
@@ -135,7 +136,13 @@ public class SistemaImpl implements Sistema{
 
     @Override
     public void mensajeMenu3() {
-
+        System.out.println("-----Bienvenido a su cuenta administrador-----");
+        System.out.println("1.- Registrar manga.");
+        System.out.println("2.- Ver ultimas compras.");
+        System.out.println("3.- Ver el estado de una compra");
+        System.out.println("4.- Estadisticas");
+        System.out.println("Elija una opcion: ");
+        String pregunta = opcion.nextLine();
 
     }
 
@@ -155,29 +162,29 @@ public class SistemaImpl implements Sistema{
         int tamanio1 = 0;
 
         String linea = in.readLine();
-
+        System.out.println(linea);
         while (linea != null){
             String[] campos = linea.split(",");
-
-            if (linea.length() == 5) {
+            if (campos.length == 5) {
                 String usuarios1 = campos[0];
                 String nombres = campos[1];
                 int id = Integer.parseInt(campos[2]);
                 String contrasenias = campos[3];
                 int id_administrador = Integer.parseInt(campos[4]);
-                Usuario usuario1 = new Usuario(usuarios1,nombres,id,contrasenias,id_administrador);
-                usuarios.add(usuario1);
+                Usuario usuario = new Usuario(usuarios1,nombres,id,contrasenias,id_administrador);
+                usuarios.add(usuario);
             }
-            else if(linea.length() == 4){
+            else if(campos.length == 4){
                 String usuarios1 = campos[0];
                 String nombres = campos[1];
                 int id = Integer.parseInt(campos[2]);
                 String contrasenias = campos[3];
-                Usuario usuario2 = new Usuario(usuarios1,nombres,id,contrasenias);
-                usuarios.add(usuario2);
+                Usuario usuario = new Usuario(usuarios1,nombres,id,contrasenias);
+                usuarios.add(usuario);
             }
             linea = in.readLine();
         }
+        System.out.println(usuarios.get(1).getNombreDeUsuario());
 
     }
 
@@ -213,15 +220,15 @@ public class SistemaImpl implements Sistema{
         String linea2 = in3.readLine();
         while (linea != null) {
             System.out.println(linea);
-            String[] campos = linea.split(";");
+            String[] campos = linea.split(":");
             int isbn = Integer.parseInt(campos[0]);
             int cantidad_comentarios = Integer.parseInt(campos[1]);
+
             while (linea2 != null) {
                 String[] campos2 = linea2.split(";");
                 String comentario2 = campos2[0];
                 double critica = Double.parseDouble(campos2[1]);
             }
-            Comentario comentario1 = new Comentario(isbn,cantidad_comentarios);
         }
     }
     public void cargarCompras(){
