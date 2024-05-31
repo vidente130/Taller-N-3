@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import edu.princeton.cs.stdlib.In;
+//import edu.princeton.cs.stdlib.In;
 
 public class SistemaImpl implements Sistema{
 
@@ -24,7 +24,6 @@ public class SistemaImpl implements Sistema{
     public void menu() {
         cargarArchivos();
 
-        System.out.println(usuarios.get(1).getNombreDeUsuario());
         mensajeMenu1();
         String pregunta = opcion.nextLine();
         while (true){
@@ -81,7 +80,7 @@ public class SistemaImpl implements Sistema{
     public void iniciarUsuario2(){
         System.out.println("Escriba su nombre de Id de Administrador:");
         int admin = opcion.nextInt();
-        System.out.println("Escriba su nombre de Usuario:");
+        System.out.println("Escriba su nombre de administrador:");
         String usuario = opcion.nextLine();
         System.out.println("Escriba su contrasenia:");
         String contrasenia2 = opcion.nextLine();
@@ -161,19 +160,21 @@ public class SistemaImpl implements Sistema{
             String[] campos = linea.split(",");
 
             if (linea.length() == 5) {
-                String usuarios = campos[0];
+                String usuarios1 = campos[0];
                 String nombres = campos[1];
                 int id = Integer.parseInt(campos[2]);
                 String contrasenias = campos[3];
                 int id_administrador = Integer.parseInt(campos[4]);
-                Usuario usuario1 = new Usuario(usuarios,nombres,id,contrasenias,id_administrador);
+                Usuario usuario1 = new Usuario(usuarios1,nombres,id,contrasenias,id_administrador);
+                usuarios.add(usuario1);
             }
             else if(linea.length() == 4){
-                String usuarios = campos[0];
+                String usuarios1 = campos[0];
                 String nombres = campos[1];
                 int id = Integer.parseInt(campos[2]);
                 String contrasenias = campos[3];
-                Usuario usuario2 = new Usuario(usuarios,nombres,id,contrasenias);
+                Usuario usuario2 = new Usuario(usuarios1,nombres,id,contrasenias);
+                usuarios.add(usuario2);
             }
             linea = in.readLine();
         }
@@ -187,7 +188,7 @@ public class SistemaImpl implements Sistema{
 
         String linea = in2.readLine();
 
-        while (!linea.isEmpty()){
+        while (linea != null){
             System.out.println(linea);
             String[] campos = linea.split(";");
             int isbn = Integer.parseInt(campos[0]);
@@ -197,6 +198,7 @@ public class SistemaImpl implements Sistema{
             int precio = Integer.parseInt(campos[4]);
 
             Manga manga = new Manga(isbn,nombre,stock,descripcion,precio);
+            mangas.add(manga);
             linea = in2.readLine();
 
 
@@ -205,25 +207,27 @@ public class SistemaImpl implements Sistema{
     }
 
     public void cargarComentarios(){
-        In in3 = new In("comentarios.csv");
-        int tamanio3 = 0;
+        In in3 = new In("comments.csv");
 
         String linea = in3.readLine();
-
-        while (!linea.isEmpty()){
-
+        String linea2 = in3.readLine();
+        while (linea != null) {
             System.out.println(linea);
             String[] campos = linea.split(";");
+            int isbn = Integer.parseInt(campos[0]);
+            int cantidad_comentarios = Integer.parseInt(campos[1]);
+            while (linea2 != null) {
+                String[] campos2 = linea2.split(";");
+                String comentario2 = campos2[0];
+                double critica = Double.parseDouble(campos2[1]);
+            }
+            Comentario comentario1 = new Comentario(isbn,cantidad_comentarios);
         }
-
     }
     public void cargarCompras(){
         In in4 = new In("compras.csv");
-
-        int tamanio3 = 0;
         String linea = in4.readLine();
-        while (!linea.isEmpty()){
-            System.out.println(linea);
+        while (linea != null){
             String[] campos = linea.split(",");
             int idCompra = Integer.parseInt(campos[0]);
             int idUsuario = Integer.parseInt(campos[1]);
@@ -231,6 +235,7 @@ public class SistemaImpl implements Sistema{
             String fecha = campos[3];
             int cantidadCompra = Integer.parseInt(campos[4]);
             Compra compra = new Compra(idCompra,idUsuario,estado,fecha,cantidadCompra);
+            compras.add(compra);
             linea = in4.readLine();
 
         }
