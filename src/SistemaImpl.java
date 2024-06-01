@@ -58,20 +58,27 @@ public class SistemaImpl implements Sistema{
             if (contrasenia.equals("lafranx") || contrasenia.equals("soyamarillo2") || contrasenia.equals("soymatador5")){
                 mensajeMenu2();
                 String pregunta = opcion.nextLine();
-                switch (pregunta) {
+                while (true){
+                    switch (pregunta) {
 
-                    case "1":
+                        case "1":
 
-                    case "2":
+                            break;
+                        case "2":
 
-                    case "3":
+                            break;
+                        case "3":
 
-                    case "4":
+                            break;
+                        case "4":
 
-                    case "5":
+                            break;
+                        case "5":
 
-                    case "6":
-
+                            break;
+                        case "6":
+                            return;
+                    }
                 }
             }
             else{
@@ -99,7 +106,28 @@ public class SistemaImpl implements Sistema{
                         System.out.println("Entrando a la cuenta");
                         mensajeMenu3();
                         String pregunta = opcion.nextLine();
+                        while (true){
+                            switch (pregunta){
 
+                                case "1" :
+
+                                    break;
+                                case "2" :
+
+                                    break;
+                                case "3" :
+
+                                    break;
+                                case "4" :
+
+                                    break;
+                                case "5" :
+
+                                    return;
+                            }
+                            mensajeMenu3();
+                            pregunta = opcion.nextLine();
+                        }
                     }
                     else{
                         System.out.println("Disculpe no es su contraseña");
@@ -272,10 +300,7 @@ public class SistemaImpl implements Sistema{
 
     }
 
-
-    @Override
-    public void registrarManga(String titulo, int isbn, int stock, String descripcion, int precio) {
-
+    public void registrarManga(){
         System.out.println("ingrese el titulo del manga ha agregar ");
         String Titulo = opcion.nextLine();
         System.out.println("ingrese el ISBN del manga ha agregar ");
@@ -286,8 +311,12 @@ public class SistemaImpl implements Sistema{
         String Descripcion = opcion.nextLine();
         System.out.println("ingrese el precio del manga ha agregar ");
         int Precio = opcion.nextInt();
+        registrarManga(Titulo,Isbn,Stock,Descripcion, Precio);
+    }
 
-        Manga manga = new Manga(Isbn,Titulo,Stock,Descripcion,Precio);
+    @Override
+    public void registrarManga(String titulo, int isbn, int stock, String descripcion, int precio) {
+        Manga manga = new Manga(isbn,titulo,stock,descripcion,precio);
         mangas.add(manga);
 
 
