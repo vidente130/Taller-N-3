@@ -9,7 +9,7 @@ public class Manga extends CodigoManga{
     private int precio;
 
 
-    public Manga(int isbn, String nombre, int stock, String descripcion, int precio) {
+    public Manga(String isbn, String nombre, int stock, String descripcion, int precio) {
         super(isbn);
         this.nombre = nombre;
         this.stock = stock;

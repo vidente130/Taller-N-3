@@ -14,7 +14,7 @@ public interface Sistema {
 
     void cargarArchivos();
 
-    void registrarManga(String titulo,int isbn, int stock, String descripcion, int precio);
+    void registrarManga(String titulo,String isbn, int stock, String descripcion, int precio);
 
     void verUltimosMangas();
 

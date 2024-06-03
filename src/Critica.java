@@ -6,7 +6,7 @@ public class Critica extends CodigoManga{
 
     private ArrayList<Comentario> comentarios;
 
-    public Critica(int isbn, int cantidad_Comentarios, ArrayList<Comentario> comentarios){
+    public Critica(String isbn, int cantidad_Comentarios, ArrayList<Comentario> comentarios){
         super(isbn);
         this.cantidad_Comentarios = cantidad_Comentarios;
         this.comentarios = new ArrayList<>();
@@ -17,6 +17,7 @@ public class Critica extends CodigoManga{
     }
 
     public ArrayList<Comentario> comentarios(){
+
         return comentarios;
     }
 

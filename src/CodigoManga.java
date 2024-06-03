@@ -1,12 +1,12 @@
 public class CodigoManga {
 
-    private int isbn;
+    private String isbn;
 
-    public CodigoManga(int isbn){
+    public CodigoManga(String isbn){
         this.isbn = isbn;
     }
 
-    public int getIsbn(){
+    public String getIsbn(){
         return isbn;
     }
 }

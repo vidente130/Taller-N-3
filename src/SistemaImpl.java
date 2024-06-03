@@ -26,6 +26,9 @@ public class SistemaImpl implements Sistema{
     @Override
     public void menu() {
         cargarArchivos();
+        cargarMangas();
+        cargarComentarios();
+        cargarCompras();
         mensajeMenu1();
         String pregunta = opcion.nextLine();
         while (true){
@@ -86,7 +89,7 @@ public class SistemaImpl implements Sistema{
             }
         }
         else{
-            System.out.println("Disculpe no posu su nombre bien");
+            System.out.println("Disculpe no puso su nombre bien");
         }
 
     }
@@ -94,7 +97,6 @@ public class SistemaImpl implements Sistema{
     public void iniciarUsuario2(){
         System.out.println("Escriba su nombre de Id de Administrador:");
         int admin = opcion.nextInt();
-        try{
             if (admin == usuarios.get(1).getAdministrador_id()){
                 System.out.println("Escriba su nombre de administrador:");
                 String usuario = opcion.nextLine();
@@ -110,10 +112,11 @@ public class SistemaImpl implements Sistema{
                             switch (pregunta){
 
                                 case "1" :
-
+                                    registrarManga();
                                     break;
                                 case "2" :
 
+                                    verUltimosMangas();
                                     break;
                                 case "3" :
 
@@ -141,11 +144,7 @@ public class SistemaImpl implements Sistema{
                 System.out.println("Disculpe no es su Id de administrador");
 
             }
-        }
 
-        catch(Exception e){
-            System.out.println("Porfavor, escriba li Id de administrador con numeros");
-        }
 
     }
 
@@ -183,9 +182,6 @@ public class SistemaImpl implements Sistema{
         System.out.println("4.- Estadisticas.");
         System.out.println("5.- Salir.");
         System.out.println("Elija una opcion: ");
-        String pregunta = opcion.nextLine();
-
-
     }
 
     @Override
@@ -201,7 +197,7 @@ public class SistemaImpl implements Sistema{
     @Override
     public void cargarArchivos() {
         In in = new In("users.csv");
-        int tamanio1 = 0;
+
         String linea = in.readLine();
         while (linea != null){
             String[] campos = linea.split(",");
@@ -230,14 +226,11 @@ public class SistemaImpl implements Sistema{
     public void cargarMangas(){
 
         In in2 = new In("mangas.csv");
-        int tamanio2 = 0;
 
         String linea = in2.readLine();
-
         while (linea != null){
-            System.out.println(linea);
             String[] campos = linea.split(";");
-            int isbn = Integer.parseInt(campos[0]);
+            String isbn = campos[0];
             String nombre = campos[1];
             int stock = Integer.parseInt(campos[2]);
             String descripcion = campos[3];
@@ -246,9 +239,6 @@ public class SistemaImpl implements Sistema{
             Manga manga = new Manga(isbn,nombre,stock,descripcion,precio);
             mangas.add(manga);
             linea = in2.readLine();
-
-
-
         }
     }
 
@@ -259,7 +249,7 @@ public class SistemaImpl implements Sistema{
         String linea2 = in3.readLine();
         while (linea != null) {
             String[] campos = linea.split(":");
-            int isbn = Integer.parseInt(campos[0]);
+            String isbn = campos[0];
             int cantidad_comentario = Integer.parseInt(campos[1]);
             ArrayList<Comentario> comentariosLista = new ArrayList<>();
 
@@ -274,11 +264,15 @@ public class SistemaImpl implements Sistema{
                     int critica = Integer.parseInt(campos2[1]);
                     Comentario comentario1 = new Comentario(mensaje,critica);
                     comentarios.add(comentario1);
+                    Critica critica1 = new Critica(isbn,cantidad_comentario,comentariosLista);
+                    criticas.add(critica1);
+
                     // Separo el comentario por ;
                     // Obtengo el mensaje y la critica
                     // Lo agrego a la lista
                 }
             }
+
 
         }
     }
@@ -287,12 +281,13 @@ public class SistemaImpl implements Sistema{
         String linea = in4.readLine();
         while (linea != null){
             String[] campos = linea.split(",");
-            int idCompra = Integer.parseInt(campos[0]);
-            int idUsuario = Integer.parseInt(campos[1]);
-            String estado = campos[2];
-            String fecha = campos[3];
-            int cantidadCompra = Integer.parseInt(campos[4]);
-            Compra compra = new Compra(idCompra,idUsuario,estado,fecha,cantidadCompra);
+            int idNumero = Integer.parseInt(campos[0]);
+            String idCompra = campos[1];
+            int idUsuario = Integer.parseInt(campos[2]);
+            String estado = campos[3];
+            String fecha = campos[4];
+            int cantidadCompra = Integer.parseInt(campos[5]);
+            Compra compra = new Compra(idCompra,idNumero,idUsuario,estado,fecha,cantidadCompra);
             compras.add(compra);
             linea = in4.readLine();
 
@@ -303,31 +298,116 @@ public class SistemaImpl implements Sistema{
     public void registrarManga(){
         System.out.println("ingrese el titulo del manga ha agregar ");
         String Titulo = opcion.nextLine();
-        System.out.println("ingrese el ISBN del manga ha agregar ");
-        int Isbn = opcion.nextInt();
-        System.out.println("ingrese el stock del manga ha agregar ");
-        int Stock = opcion.nextInt();
-        System.out.println("ingrese el descripcion del manga ha agregar ");
-        String Descripcion = opcion.nextLine();
-        System.out.println("ingrese el precio del manga ha agregar ");
-        int Precio = opcion.nextInt();
-        registrarManga(Titulo,Isbn,Stock,Descripcion, Precio);
+        if (!Titulo.equals("")){
+            System.out.println("ingrese el ISBN del manga ha agregar ");
+            String Isbn = opcion.nextLine();
+            if (!Isbn.equals("")){
+                System.out.println("ingrese el stock del manga ha agregar ");
+                int Stock = opcion.nextInt();
+                if(Stock >= 0){
+                    System.out.println("ingrese el descripcion del manga ha agregar ");
+                    String Descripcion = opcion.nextLine();
+                    if(!Descripcion.equals("")){
+                        System.out.println("ingrese el precio del manga ha agregar ");
+                        int Precio = opcion.nextInt();
+                        if (Precio > 0){
+                            registrarManga(Titulo,Isbn,Stock,Descripcion, Precio);
+                        }
+                        else{
+                            System.out.println("Porfavor, elija un precio mayor a 0");
+                        }
+                    }
+                    System.out.println("Disculpe, no puso nada en la descripcion del manga");
+                }
+                else{
+                    System.out.println("Porfavor, elija un stock mayor a 0");
+                }
+            }
+            else{
+                System.out.println("Porfavor elija un isbn de numero mayores a 0");
+            }
+        }
+        else{
+            System.out.println("Disculpe no puso un titulo al manga");
+        }
     }
 
     @Override
-    public void registrarManga(String titulo, int isbn, int stock, String descripcion, int precio) {
+    public void registrarManga(String titulo, String isbn, int stock, String descripcion, int precio) {
         Manga manga = new Manga(isbn,titulo,stock,descripcion,precio);
         mangas.add(manga);
-
-
-
-
     }
 
     @Override
     public void verUltimosMangas() {
+        for (int i = 0; i < compras.size(); i++) {
+            String isbn1 = compras.get(i + (compras.size() - 1)).getIsbn();
+            String isbn2 = compras.get(i + (compras.size() - 2)).getIsbn();
+            String isbn3 = compras.get(i + (compras.size() - 3)).getIsbn();
+            int idu1 = compras.get(i + (compras.size() - 1)).getId_usuario();
+            int idu2 = compras.get(i + (compras.size() - 2)).getId_usuario();
+            int idu3 = compras.get(i + (compras.size() - 3)).getId_usuario();
+            int posicion1 = compras.indexOf(isbn1) + 3;
+            int posicion2 = compras.indexOf(isbn2) + 2;
+            int posicion3 = compras.indexOf(isbn3) + 1;
+            System.out.println(" --- Comprador 1 ---");
+            for (int j = 0; j < mangas.size(); j++){
+                if (isbn1.equals(mangas.get(j).getIsbn())){
+                    System.out.println(mangas.get(j).getNombre());
+                    System.out.println(mangas.get(j).getPrecio());
+                }
+            }
+            System.out.println(posicion1);
+            System.out.println(posicion2);
+            System.out.println(posicion3);
 
+            for(int j = 0; j < usuarios.size(); j++){
+                if (idu1 == usuarios.get(j).getId()){
+                    System.out.println(usuarios.get(j).getNombreDeUsuario());
+                    break;
+                }
+            }
+            System.out.println(compras.get(posicion1).getFecha());
+            System.out.println(compras.get(posicion1).getEstado());
+            System.out.println("-----------");
+            System.out.println(" --- Comprador 2 --- ");
+            for (int j = 0; j < mangas.size(); j++){
+                if(isbn2.equals(mangas.get(j).getIsbn())){
+                    System.out.println(mangas.get(j).getNombre());
+                    System.out.println(mangas.get(j).getPrecio());
+                    break;
+                }
+            }
+            for(int j = 0; j < usuarios.size(); j++){
+                if (idu2 == usuarios.get(j).getId()){
+                    System.out.println(usuarios.get(j).getNombreDeUsuario());
+                    break;
+                }
+            }
+            System.out.println(compras.get(posicion2).getFecha());
+            System.out.println(compras.get(posicion2).getEstado());
+            System.out.println("------------------------------------");
+            System.out.println(" --- Comprador 3 ---");
+            for (int j = 0; j < mangas.size(); j++){
+                if(isbn3.equals(mangas.get(j).getIsbn())){
+                    System.out.println(mangas.get(j).getNombre());
+                    System.out.println(mangas.get(j).getPrecio());
+                    break;
+                }
+            }
+            for (int j = 0; j < usuarios.size(); j++){
+                if (idu3 == usuarios.get(j).getId()){
+                    System.out.println(usuarios.get(j).getNombreDeUsuario());
+                    break;
+                }
+            }
+            System.out.println(compras.get(posicion3).getFecha());
+            System.out.println(compras.get(posicion3).getEstado());
+            System.out.println("-------------------------------------");
+            break;
+        }
     }
+
 
     @Override
     public void actualizarCompra(int isbn) {
