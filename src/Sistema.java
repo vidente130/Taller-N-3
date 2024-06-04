@@ -18,7 +18,7 @@ public interface Sistema {
 
     void verUltimosMangas();
 
-    void actualizarCompra(int isbn);
+    void actualizarCompra(String isbn);
 
     void estadisticas();
 
@@ -28,11 +28,11 @@ public interface Sistema {
 
     void mangasComprados();
 
-    void valorarManga(int isbn);
+    void valorarManga(String isbn);
 
-    void verComentarios(int isbn);
+    void verComentarios(String isbn);
 
-    void comprarManga(int isbn);
+    void comprarManga(String isbn);
 
     void salir2();
 

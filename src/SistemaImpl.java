@@ -261,19 +261,19 @@ public class SistemaImpl implements Sistema{
                 for(String comentario : comentarios1) {
                     String[] campos2 = linea2.split(";");
                     String mensaje = campos2[0];
-                    int critica = Integer.parseInt(campos2[1]);
+                    double critica = Double.parseDouble(campos2[1]);
                     Comentario comentario1 = new Comentario(mensaje,critica);
                     comentarios.add(comentario1);
                     Critica critica1 = new Critica(isbn,cantidad_comentario,comentariosLista);
                     criticas.add(critica1);
-
+                    linea2 = in3.readLine();
                     // Separo el comentario por ;
                     // Obtengo el mensaje y la critica
                     // Lo agrego a la lista
                 }
+
             }
-
-
+            linea = in3.readLine();
         }
     }
     public void cargarCompras(){
@@ -307,17 +307,22 @@ public class SistemaImpl implements Sistema{
                 if(Stock >= 0){
                     System.out.println("ingrese el descripcion del manga ha agregar ");
                     String Descripcion = opcion.nextLine();
+                    Descripcion = opcion.nextLine();
                     if(!Descripcion.equals("")){
                         System.out.println("ingrese el precio del manga ha agregar ");
                         int Precio = opcion.nextInt();
                         if (Precio > 0){
                             registrarManga(Titulo,Isbn,Stock,Descripcion, Precio);
+
                         }
                         else{
                             System.out.println("Porfavor, elija un precio mayor a 0");
                         }
                     }
-                    System.out.println("Disculpe, no puso nada en la descripcion del manga");
+                    else{
+                        System.out.println("Disculpe, no puso nada en la descripcion del manga");
+                    }
+
                 }
                 else{
                     System.out.println("Porfavor, elija un stock mayor a 0");
@@ -408,10 +413,27 @@ public class SistemaImpl implements Sistema{
         }
     }
 
-
+    public void actualizarCompra(){
+        System.out.println("¿Cual isbn es del manga que quiere cambiar?");
+        String isbn = opcion.nextLine();
+        actualizarCompra(isbn);
+    }
     @Override
-    public void actualizarCompra(int isbn) {
-
+    public void actualizarCompra(String isbn) {
+        for (int i = 0; i < compras.size(); i++){
+            if (isbn.equals(compras.get(i).getIsbn())){
+                System.out.println("Avanzando la etapa del pedido");
+                if (compras.get(i).getEstado().equals("OBTENIENDO_PRODUCTO")){
+                    compras.set(i,compras.get(i)).setEstado("ALISTANDO_EL_PRODUCTO");
+                }
+                else if(compras.get(i).getEstado().equals("ALISTANDO_EL_PRODUCTO")){
+                    compras.set(i,compras.get(i)).setEstado("ENVIANDO_A_DOMICILIO");
+                }
+                else if(compras.get(i).getEstado().equals("ENVIANDO_A_DOMICILIO")){
+                    compras.set(i,compras.get(i)).setEstado("RECIBIDO");
+                }
+            }
+        }
     }
 
     @Override
@@ -446,19 +468,17 @@ public class SistemaImpl implements Sistema{
 
     public void valorarManga(){
         System.out.println("Escriba el isbn del manga que desea valorar ");
-
-        int isbn = opcion.nextInt();
-
+        String isbn = opcion.nextLine();
         valorarManga(isbn);
     }
 
     @Override
-    public void valorarManga(int isbn) {
+    public void valorarManga(String isbn) {
 
     }
 
     @Override
-    public void verComentarios(int isbn) {
+    public void verComentarios(String isbn) {
         cargarComentarios();
 
 
@@ -466,7 +486,7 @@ public class SistemaImpl implements Sistema{
     }
 
     @Override
-    public void comprarManga(int isbn) {
+    public void comprarManga(String isbn) {
         cargarMangas();
 
     }

@@ -32,4 +32,20 @@ public class Compra extends CodigoManga {
     public int getCantidadCompra(){
         return cantidadCompra;
     }
+
+    public void setIdNumero(int idNumero){
+        this.idNumero = idNumero;
+    }
+    public void setId_usuario(int id_usuario){
+        this.id_usuario = id_usuario;
+    }
+    public void setEstado(String estado){
+        this.estado = estado;
+    }
+    public void setFecha (String fecha){
+        this.fecha = fecha;
+    }
+    public void setCantidadCompra(int cantidadCompra){
+        this.cantidadCompra = cantidadCompra;
+    }
 }
