@@ -14,6 +14,8 @@ public class SistemaImpl implements Sistema{
 
     private ArrayList<Critica> criticas;
 
+
+
     public SistemaImpl() {
         this.usuarios = new ArrayList<>();
         this.mangas = new ArrayList<>();
@@ -27,7 +29,6 @@ public class SistemaImpl implements Sistema{
     public void menu() {
         cargarArchivos();
         cargarMangas();
-        cargarComentarios();
         cargarCompras();
         mensajeMenu1();
         String pregunta = opcion.nextLine();
@@ -65,21 +66,27 @@ public class SistemaImpl implements Sistema{
                     switch (pregunta) {
 
                         case "1":
+                            buscarManga();
 
                             break;
                         case "2":
+                            mangasComprados();
 
                             break;
                         case "3":
+                            valorarManga();
 
                             break;
                         case "4":
+                            verComentarios();
 
                             break;
                         case "5":
+                            comprarManga();
 
                             break;
                         case "6":
+                            System.out.println("Saliendo ");
                             return;
                     }
                 }
@@ -119,13 +126,15 @@ public class SistemaImpl implements Sistema{
                                     verUltimosMangas();
                                     break;
                                 case "3" :
+                                    actualizarCompra();
 
                                     break;
                                 case "4" :
+                                    estadisticas();
 
                                     break;
                                 case "5" :
-
+                                    System.out.println("Saliendo ");
                                     return;
                             }
                             mensajeMenu3();
@@ -362,9 +371,6 @@ public class SistemaImpl implements Sistema{
                     System.out.println(mangas.get(j).getPrecio());
                 }
             }
-            System.out.println(posicion1);
-            System.out.println(posicion2);
-            System.out.println(posicion3);
 
             for(int j = 0; j < usuarios.size(); j++){
                 if (idu1 == usuarios.get(j).getId()){
@@ -438,6 +444,52 @@ public class SistemaImpl implements Sistema{
 
     @Override
     public void estadisticas() {
+        //TODO: Completar funcion
+
+       int contador2 = 0;
+        for (int i = 0; i < usuarios.size(); i++){
+            int contador = 0;
+            for (int j = 0; j <  compras.size() ; j++){
+
+                    if (compras.get(j).getId_usuario() == usuarios.get(i).getId()  ){
+                    contador += 1;
+
+
+
+
+               }
+           }
+            if (contador > 5) {
+                System.out.println("Usuarios mas frecuentes / compras realizadas ");
+                System.out.print("[ ");
+
+                System.out.print(usuarios.get(i).getId());
+                System.out.println(contador);
+                contador2 += 1;
+
+                System.out.println(" ]");
+            }
+
+        }
+        System.out.println("porcentaje de usuarios frecuentes " +  (contador2/usuarios.size())*100);
+
+        //TODO: Mostrar el manga con mejor valoracion
+
+
+
+        int contador3 = 0;
+        for (int i = 0; i < compras.size(); i++){
+            if (!compras.get(i).getEstado().equals("RECIBIDO")){
+                contador3 += 1;
+            }
+
+
+        }
+        System.out.println("porcentaje de productos que tovia no han sido entregados: " + (contador3/compras.size())*100);
+
+
+
+
 
     }
 
@@ -455,12 +507,39 @@ public class SistemaImpl implements Sistema{
 
     @Override
     public void buscarManga(String titulo) {
-       
+        int contador = 0;
+        for (int i = 0; i < mangas.size(); i++){
+            if (mangas.get(i).getNombre().contains(titulo)){
+               contador += 1;
+
+                System.out.print("Nombre: "  + mangas.get(i).getNombre());
+                System.out.print("Isbn: "  + mangas.get(i).getIsbn());
+                System.out.println("Precio: " + mangas.get(i).getPrecio());
+                System.out.println("Stock: " + mangas.get(i).getStock());
+
+            }
+
+
+        }
+        if (contador == 0) {
+            System.out.println("No se encontro lo que buscaba intente otra vez");
+        }
 
     }
 
     @Override
     public void mangasComprados() {
+        //TODO: Completar funcion
+        for (int i = 0; i < usuarios.size(); i++){
+            for (int j = 0; j < compras.size(); j++){
+                if (compras.get(j).getId_usuario() == usuarios.get(i).getId()){
+
+
+
+                }
+
+            }
+        }
 
 
 
@@ -474,12 +553,35 @@ public class SistemaImpl implements Sistema{
 
     @Override
     public void valorarManga(String isbn) {
+        //TODO: Completar funcion
+
+    }
+
+    public void verComentarios(){
+        //TODO: Completar funcion
 
     }
 
     @Override
     public void verComentarios(String isbn) {
+        //TODO: Completar funcion
         cargarComentarios();
+
+
+
+    }
+
+    public void comprarManga( ){
+        //TODO: Completar funcion
+        System.out.println("Escriba el ISBN del manga que desea comprar ");
+        String isbn = opcion.nextLine();
+
+        for (int i = 0; i < mangas.size(); i++){
+            if (mangas.get(i).getIsbn().equals(isbn)){
+                comprarManga(isbn);
+            }
+        }
+        System.out.println("Inserte un ISBN valido ");
 
 
 
@@ -487,7 +589,8 @@ public class SistemaImpl implements Sistema{
 
     @Override
     public void comprarManga(String isbn) {
-        cargarMangas();
+        //TODO: Completar funcion
+
 
     }
 
