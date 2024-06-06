@@ -26,7 +26,7 @@ public interface Sistema {
 
     void buscarManga(String titulo);
 
-    void mangasComprados();
+    void mangasComprados(String nombre);
 
     void valorarManga(String isbn);
 

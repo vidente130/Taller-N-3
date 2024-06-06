@@ -29,6 +29,7 @@ public class SistemaImpl implements Sistema{
     public void menu() {
         cargarArchivos();
         cargarMangas();
+        cargarComentarios();
         cargarCompras();
         mensajeMenu1();
         String pregunta = opcion.nextLine();
@@ -70,16 +71,15 @@ public class SistemaImpl implements Sistema{
 
                             break;
                         case "2":
-                            mangasComprados();
+                            mangasComprados(nombre);
 
                             break;
                         case "3":
                             valorarManga();
-
                             break;
                         case "4":
-                            verComentarios();
 
+                            verComentarios();
                             break;
                         case "5":
                             comprarManga();
@@ -89,6 +89,8 @@ public class SistemaImpl implements Sistema{
                             System.out.println("Saliendo ");
                             return;
                     }
+                    mensajeMenu2();
+                    pregunta = opcion.nextLine();
                 }
             }
             else{
@@ -268,17 +270,13 @@ public class SistemaImpl implements Sistema{
 
                 String[] comentarios1 = comentarioContenido.split("#");
                 for(String comentario : comentarios1) {
-                    String[] campos2 = linea2.split(";");
+                    String[] campos2 = comentario.split(";");
                     String mensaje = campos2[0];
                     double critica = Double.parseDouble(campos2[1]);
                     Comentario comentario1 = new Comentario(mensaje,critica);
                     comentarios.add(comentario1);
                     Critica critica1 = new Critica(isbn,cantidad_comentario,comentariosLista);
                     criticas.add(critica1);
-                    linea2 = in3.readLine();
-                    // Separo el comentario por ;
-                    // Obtengo el mensaje y la critica
-                    // Lo agrego a la lista
                 }
 
             }
@@ -453,10 +451,6 @@ public class SistemaImpl implements Sistema{
 
                     if (compras.get(j).getId_usuario() == usuarios.get(i).getId()  ){
                     contador += 1;
-
-
-
-
                }
            }
             if (contador > 5) {
@@ -526,38 +520,92 @@ public class SistemaImpl implements Sistema{
         }
 
     }
-
     @Override
-    public void mangasComprados() {
+    public void mangasComprados(String nombre) {
         //TODO: Completar funcion
-        for (int i = 0; i < usuarios.size(); i++){
-            for (int j = 0; j < compras.size(); j++){
-                if (compras.get(j).getId_usuario() == usuarios.get(i).getId()){
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (nombre.equals(usuarios.get(i).getNombreDeUsuario())) {
+                for (int j = 0; j < compras.size(); j++) {
+                    if (usuarios.get(i).getId() == compras.get(j).getId_usuario()){
+                        System.out.println(compras.get(j).getIdNumero());
+                        for(int k = 0; k < mangas.size(); k++){
+                            if (compras.get(j).getIsbn().equals(mangas.get(k).getIsbn())){
+                                System.out.println(mangas.get(k).getNombre());
+                                System.out.println(compras.get(j).getEstado());
+                                System.out.println(mangas.get(k).getPrecio());
+                                System.out.println("1.- Siguiente manga");
+                                System.out.println("2.- Anterior manga");
+                                System.out.println("3.- salir");
+                                String pregunta = opcion.nextLine();
+                                while(true){
+                                    switch (pregunta){
 
+                                        case "1" :
+                                            
+                                        case "2" :
 
-
+                                        case "3" :
+                                            break;
+                                    }
+                                    System.out.println("1.- Siguiente manga");
+                                    System.out.println("2.- Anterior manga");
+                                    System.out.println("3.- Salir");
+                                    pregunta = opcion.nextLine();
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        System.out.println("Disculpe, no compro por el momento mangas.");
+                    }
                 }
-
             }
         }
-
-
-
     }
 
     public void valorarManga(){
-        System.out.println("Escriba el isbn del manga que desea valorar ");
+        System.out.println("Escriba el isbn del manga que desea valorar: ");
         String isbn = opcion.nextLine();
         valorarManga(isbn);
     }
 
     @Override
     public void valorarManga(String isbn) {
+        for(int i = 0; i < criticas.size(); i++){
+            if(isbn.equals(criticas.get(i).getIsbn())){
+                System.out.println("¿Que comentario quiere hacer al manga?");
+                String mensaje = opcion.nextLine();
+                if (mensaje.length() <= 255) {
+                    System.out.println("¿Que valoracion quiere hacerle?");
+                    double valoracion = opcion.nextDouble();
+                    if (valoracion >= 1.0 && valoracion <= 5.0) {
+                        Comentario comentario = new Comentario(mensaje, valoracion);
+                        comentarios.add(comentario);
+                        System.out.println("Se completo el agregamiento del comentario");
+                        System.out.println(comentarios.get(1).getMensaje());
+
+                    }
+                    else{
+                        System.out.println("Disculpe la critica tiene que ser positiva y tiene que ser entre 1.0 y 5.0");
+                        break;
+                    }
+                }
+                else{
+                    System.out.println("Disculpe el mensaje no puede tener mas de 255 caracteres");
+                    break;
+                }
+                break;
+            }
+        }
+
         //TODO: Completar funcion
 
     }
 
     public void verComentarios(){
+        System.out.println("¿Cual es el isbn del manga?");
+        String isbn = opcion.nextLine();
+        verComentarios(isbn);
         //TODO: Completar funcion
 
     }
@@ -565,8 +613,13 @@ public class SistemaImpl implements Sistema{
     @Override
     public void verComentarios(String isbn) {
         //TODO: Completar funcion
-        cargarComentarios();
-
+        System.out.println("------- (Comentarios) --------");
+        for (int i = 0; i < comentarios.size();i++ ){
+            if (isbn.equals(criticas.get(i).getIsbn())){
+                System.out.println("Del manga con isbn: "+ criticas.get(i).getIsbn());
+                System.out.println(comentarios.get(i).getMensaje());
+            }
+        }
 
 
     }
@@ -582,8 +635,6 @@ public class SistemaImpl implements Sistema{
             }
         }
         System.out.println("Inserte un ISBN valido ");
-
-
 
     }
 
