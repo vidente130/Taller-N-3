@@ -196,19 +196,10 @@ public class SistemaImpl implements Sistema{
     }
 
     @Override
-    public void mensajeMenu4() {
-
-    }
-
-    @Override
-    public void mensajeMenu5() {
-
-    }
-
-    @Override
     public void cargarArchivos() {
         In in = new In("users.csv");
 
+        int tamanio = 0;
         String linea = in.readLine();
         while (linea != null){
             String[] campos = linea.split(",");
@@ -229,6 +220,8 @@ public class SistemaImpl implements Sistema{
                 Usuario usuario = new Usuario(usuarios1,nombres,id,contrasenias);
                 usuarios.add(usuario);
             }
+
+            tamanio ++;
             linea = in.readLine();
         }
 
@@ -237,7 +230,7 @@ public class SistemaImpl implements Sistema{
     public void cargarMangas(){
 
         In in2 = new In("mangas.csv");
-
+        int tamanio2 = 0;
         String linea = in2.readLine();
         while (linea != null){
             String[] campos = linea.split(";");
@@ -249,12 +242,14 @@ public class SistemaImpl implements Sistema{
 
             Manga manga = new Manga(isbn,nombre,stock,descripcion,precio);
             mangas.add(manga);
+            tamanio2++;
             linea = in2.readLine();
         }
     }
 
     public void cargarComentarios(){
         In in3 = new In("comments.csv");
+        int tamanio3 = 0;
 
         String linea = in3.readLine();
         String linea2 = in3.readLine();
@@ -280,11 +275,13 @@ public class SistemaImpl implements Sistema{
                 }
 
             }
+            tamanio3++;
             linea = in3.readLine();
         }
     }
     public void cargarCompras(){
         In in4 = new In("compras.csv");
+        int tamanio4 = 0;
         String linea = in4.readLine();
         while (linea != null){
             String[] campos = linea.split(",");
@@ -296,6 +293,7 @@ public class SistemaImpl implements Sistema{
             int cantidadCompra = Integer.parseInt(campos[5]);
             Compra compra = new Compra(idCompra,idNumero,idUsuario,estado,fecha,cantidadCompra);
             compras.add(compra);
+            tamanio4 ++;
             linea = in4.readLine();
 
         }
@@ -489,6 +487,16 @@ public class SistemaImpl implements Sistema{
 
     @Override
     public void salir1() {
+
+        Out out = new Out("users.csv");
+        for(int i = 0; i < usuarios.size(); i++){
+            Usuario usuario = usuarios.get(i);
+
+            String usuariosEnEscrito = usuarios.get(i).getTipoDeUsuario() + ";" + usuarios.get(i).getNombreDeUsuario() + ";" + usuarios.get(i).getId() + ";" + usuarios.get(i).getContrasenia() + ";" + usuarios.get(i).getAdministrador_id();
+
+            out.println(usuariosEnEscrito);
+
+        }
         System.out.println("adiosito señor administrador ");
 
     }
@@ -582,8 +590,6 @@ public class SistemaImpl implements Sistema{
                         Comentario comentario = new Comentario(mensaje, valoracion);
                         comentarios.add(comentario);
                         System.out.println("Se completo el agregamiento del comentario");
-                        System.out.println(comentarios.get(1).getMensaje());
-
                     }
                     else{
                         System.out.println("Disculpe la critica tiene que ser positiva y tiene que ser entre 1.0 y 5.0");
@@ -614,8 +620,9 @@ public class SistemaImpl implements Sistema{
     public void verComentarios(String isbn) {
         //TODO: Completar funcion
         System.out.println("------- (Comentarios) --------");
-        for (int i = 0; i < comentarios.size();i++ ){
+        for (int i = 0; i < criticas.size();i++){
             if (isbn.equals(criticas.get(i).getIsbn())){
+                System.out.println(comentarios.size());
                 System.out.println("Del manga con isbn: "+ criticas.get(i).getIsbn());
                 System.out.println(comentarios.get(i).getMensaje());
             }
