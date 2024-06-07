@@ -1,0 +1,43 @@
+@startuml
+skin rose
+entity CodigoManga{
+* isbn
+}
+
+entity Comentario{
+* mensaje
+* valoracion
+* cantidad de comentarios
+}
+
+entity usuario{
+* tipo de usuario
+* nombre de ususario
+* id
+* contrasenia
+* id-administrador
+}
+entity compra{
+* id-usuario
+* estado
+* fecha
+* cantidad compra
+}
+
+entity manga{
+* nombre
+* stock
+* descripcion
+* precio
+}
+
+CodigoManga -- compra : tiene <
+CodigoManga -- Comentario : tiene <
+CodigoManga -- manga : tiene <
+
+usuario -- compra : realiza >
+usuario -- Comentario : escribe >
+usuario -- manga : lee >
+
+
+@enduml

@@ -86,6 +86,7 @@ public class SistemaImpl implements Sistema{
 
                             break;
                         case "6":
+                            salir2();
                             System.out.println("Saliendo ");
                             return;
                     }
@@ -136,6 +137,7 @@ public class SistemaImpl implements Sistema{
 
                                     break;
                                 case "5" :
+                                    salir1();
                                     System.out.println("Saliendo ");
                                     return;
                             }
@@ -492,10 +494,39 @@ public class SistemaImpl implements Sistema{
         for(int i = 0; i < usuarios.size(); i++){
             Usuario usuario = usuarios.get(i);
 
-            String usuariosEnEscrito = usuarios.get(i).getTipoDeUsuario() + ";" + usuarios.get(i).getNombreDeUsuario() + ";" + usuarios.get(i).getId() + ";" + usuarios.get(i).getContrasenia() + ";" + usuarios.get(i).getAdministrador_id();
+            String usuariosEnEscrito = usuarios.get(i).getTipoDeUsuario() + "," + usuarios.get(i).getNombreDeUsuario() + "," + usuarios.get(i).getId() + "," + usuarios.get(i).getContrasenia() + "," + usuarios.get(i).getAdministrador_id();
 
             out.println(usuariosEnEscrito);
 
+        }
+        Out out2 = new Out("mangas.csv");
+        for(int i = 0; i < mangas.size();i++){
+
+            Manga manga = mangas.get(i);
+
+            String mangasEscrito = mangas.get(i).getIsbn() + ";" + mangas.get(i).getNombre() + ";" + mangas.get(i).getStock() + ";"+ mangas.get(i).getDescripcion() + ";" + mangas.get(i).getPrecio();
+
+            out2.println(mangasEscrito);
+        }
+        Out out3 = new Out("comments.csv");
+        for (int i = 0; i < criticas.size(); i++){
+            Critica critica = criticas.get(i);
+
+            for(int j = 0; j < comentarios.size(); j++){
+                Comentario comentario = comentarios.get(j);
+                String comentariosEscrito = criticas.get(i).getIsbn() + ":" + criticas.get(i).getCantidad_Comentarios() + ":" + "[" + comentarios.get(j).getMensaje() + ";" + comentarios.get(j).getCritica() + "]";
+                out3.println(comentariosEscrito);
+            }
+
+        }
+        Out out4 = new Out("compras.csv");
+        for(int i = 0; i < compras.size();i++){
+
+            Compra compra = compras.get(i);
+
+            String comprasEscrito = compras.get(i).getIdNumero() + "," + compras.get(i).getIsbn() + "," + compras.get(i).getId_usuario() + "," + compras.get(i).getEstado() + "," + compras.get(i).getFecha() + "," + compras.get(i).getCantidadCompra();
+
+            out4.println(comprasEscrito);
         }
         System.out.println("adiosito señor administrador ");
 
@@ -654,6 +685,44 @@ public class SistemaImpl implements Sistema{
 
     @Override
     public void salir2() {
+        Out out = new Out("users.csv");
+        for(int i = 0; i < usuarios.size(); i++){
+            Usuario usuario = usuarios.get(i);
+
+            String usuariosEnEscrito = usuarios.get(i).getTipoDeUsuario() + "," + usuarios.get(i).getNombreDeUsuario() + "," + usuarios.get(i).getId() + "," + usuarios.get(i).getContrasenia() + "," + usuarios.get(i).getAdministrador_id();
+
+            out.println(usuariosEnEscrito);
+
+        }
+        Out out2 = new Out("mangas.csv");
+        for(int i = 0; i < mangas.size();i++){
+
+            Manga manga = mangas.get(i);
+
+            String mangasEscrito = mangas.get(i).getIsbn() + ";" + mangas.get(i).getNombre() + ";" + mangas.get(i).getStock() + ";"+ mangas.get(i).getDescripcion() + ";" + mangas.get(i).getPrecio();
+
+            out2.println(mangasEscrito);
+        }
+        Out out3 = new Out("comments.csv");
+        for (int i = 0; i < criticas.size(); i++){
+            Critica critica = criticas.get(i);
+
+            for(int j = 0; j < comentarios.size(); j++){
+                Comentario comentario = comentarios.get(j);
+                String comentariosEscrito = criticas.get(i).getIsbn() + ":" + criticas.get(i).getCantidad_Comentarios() + ":" + "[" + comentarios.get(j).getMensaje() + ";" + comentarios.get(j).getCritica() + "]";
+                out3.println(comentariosEscrito);
+            }
+
+        }
+        Out out4 = new Out("compras.csv");
+        for(int i = 0; i < compras.size();i++){
+
+            Compra compra = compras.get(i);
+
+            String comprasEscrito = compras.get(i).getIdNumero() + "," + compras.get(i).getIsbn() + "," + compras.get(i).getId_usuario() + "," + compras.get(i).getEstado() + "," + compras.get(i).getFecha() + "," + compras.get(i).getCantidadCompra();
+
+            out4.println(comprasEscrito);
+        }
         System.out.println("adios ");
         return;
 
