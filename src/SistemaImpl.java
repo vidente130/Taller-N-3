@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 //import edu.princeton.cs.stdlib.In;
 
+// Duo = Alvaro Zapana y Renato Aguilar
 public class SistemaImpl implements Sistema{
 
     private ArrayList<Usuario> usuarios;
