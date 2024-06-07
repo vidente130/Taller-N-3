@@ -1,80 +1,116 @@
 @startuml
 
-class Usuario{
-- tipoDeUsuario: String
-- nombreDeUsuario: String
-- id: int
-- contraseña: String
-- id_administrador: int
-+ Usuario(tipoDeUsuario: String,nombreDeUsuario: String,id: int,contraseña: String,id_administrador: int )
-+ getTipoDeUsuario(): String
-+ getNombreDeUsuario(): String
-+ getId(): int
-+ getContraseña(): String
-+ getId_administrador(): int
-}
-class Manga{
-- nombre: String
-- stock: int
-- descripcion: String
-- precio: int
-+ Manga(nombre: String, stock: int, descripcion: String, precio: int)
-+ getNombre(): String
-+ getStock(): int
-+ getDescripcion(): String
-+ getPrecio(): int
-}
-class Comentario{
-- cantidadComentarios: int
-- comentarios: String
-- mensaje: String
-- critica: int
-+ Comentario(cantidadComentarios: int, comentarios: String, mensaje: String, critica: int)
-+ getCantidadComentarios(): int
-+ getComentarios(): String
-+ getMensaje(): String
-+ getCritica(): int
-}
-class Compra{
-- id_usuario: int
-- estado: String
-- fecha: String
-- cantidad: int
-+ Compra(id_usuario: int, estado: String, fecha: String, cantidad: int)
-+ getId_usuario(): int
-+ getEstado(): String
-+ getFecha(): String
-+ getCantidad(): int
-}
+skin rose
+left to right direction
+
 class CodigoManga{
-- isbn: int
-+ CodigoManga(isbn: int)
-+ getIsbn(): int
+-isbn: string
++CodigoManga(isbn: String)
++getIsbn(): String
 }
+
+class Comentario{
+-mensaje: String
+-critica: double
++Comentario(mensaje: String, critica: double)
++getMensaje(): String
++getCritica(): double
+}
+
+class Compra{
+-idNumero: int
+-id_usuario: int
+-estado: String
+-fecha: String
+-cantidadCompra: int
++Compra(isbn: String,idNumero: int,id_usuario: int,estado: String,fecha: String,cantidadCompra: int)
++getIdNumero():int
++getId_usuario(): int
++getEstado(): String
++getFecha(): String
++getCantidadCompra():int
++setIdNumero(idNumero: int): void
++setId_usuario(id_usuario: int): void
++setEstado(estado: String): void
++setFecha(fecha: String): void
++setCantidadCompra(cantidadCompra: int): void
+}
+
+class Critica{
+-cantidad_Comentario: int
+-comentarios: ArrayList<Comentario>
++Critica(isbn: String, cantidad_Comentario: int, comentarios: ArrayList<Comentario>)
++getCantidad_Comentario(): int
++comentarios(): ArrayList<Comentario>
+}
+
+class Manga{
+-nombre: String
+-stock: int
+-descripcion: String
+-precio: int
++Manga(isbn String, nombre String, stock: int, descripcion: String, precio: int)
++getNombre(): String
++getStock(): int
++getDescripcion(): String
++getPrecio(): int
+}
+
+interface Sistema{
++menu(): void
++mensajeMenu1(): void
++mensajeMenu2(): void
++mensajeMenu3(): void
++cargarArchivos(): void
++registrarManga(titulo: String, isbn: String, stock: int, descripcion: String, precio: int): void
++verUltimosMangas(): void
++actualizarCompra(isbn: String): void
++estadisticas(): void
++salir1(): void
++buscarManga(titulo String): void
++mangasComprados(nombre: String): void
++valorarManga(isbn String): void
++verComentarios(isbn String): void
++comprarManga(isbn String): void
++salir2(): void
+}
+
 class SistemaImpl{
 
-}
-interface Sistema{
-+ menu(): void
-+ mensajeMenu1(): void
-+ mensajeMenu2(): void
-+ mensajeMenu3(): void
-+ mensajeMenu4(): void
-+ mensajeMenu5(): void
-+ cargarArchivos(): void
-+ agregarManga(titulo: String, isbn: int, stock: int, descripcion: String, precio: int): void
-+ verUltimosMangas(): void
-+ actualizarCompra(isbn: int): void
-+ estadisticas(): void
-+ salir1(): void
-+ buscarManga(titulo: String): void
-+ mangasComprados(): void
-+ valorarMangas(isbn: int): void
-+ verComentarios(isbn: int): void
-+ compraManga(isbn: int): void
-+ salir2(): void
++SistemaImpl()
++iniciarUsuario(): void
++iniciarUsuario2(): void
++cargarMangas(): void
++cargarComentarios(): void
++cargarCompras(): void
+
 }
 
+class Usuario{
+-tipoDeUsuario: String
+-nombreDeUsuario: String
+-id: int
+-contrasenia: String
+-administrador_id: int
++Usuario(tipoDeUsuario: String, nombreDeUsuario: String, id: int, contrasenia: String, administrador_id: int)
++Usuario(tipoDeUsuario: String, nombreDeUsuario: String, id: int, contrasenia: String)
++getTipoDeUsuario(): String
++getNombreDeUsuario(): String
++getId(): int
++getContrasenia(): String
++getAdministrador_id(): int
+
+}
+
+Manga --|> CodigoManga
+Compra --|> CodigoManga
+Critica --|> CodigoManga
+Sistema ..|> SistemaImpl: Implementa
+SistemaImpl <- Usuario : -usuarios: ArrayList<Usuario>
+SistemaImpl <- Manga : -mangas: ArrayList<Manga>
+SistemaImpl <- Comentario: -comentarios: ArrayList<Comentario>
+SistemaImpl <- Compra: -compras: ArrayList<Compra>
+SistemaImpl <- Critica: -criticas: ArrayList<Critica>
 
 
 
